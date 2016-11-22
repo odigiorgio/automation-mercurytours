@@ -10,7 +10,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.utils.screenshotUtil;
+
 import cucumber.api.PendingException;
+import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -24,6 +27,13 @@ public class Login_TestSteps {
 	private boolean acceptNextAlert = true;
 	private StringBuffer verificationErrors = new StringBuffer();
 	  
+	private Scenario scenario;
+	  
+	@Before
+	public void keepScenario(Scenario scenario) {
+		this.scenario = scenario;
+	}
+	
 	@Before
 	// Open browser
 	public void setUp() throws Exception {
@@ -35,6 +45,7 @@ public class Login_TestSteps {
 	@Given("^User navigates to MercuryTours Home Page$")
 	public void user_navigates_to_MercuryTours_Home_Page() throws Throwable {
 		driver.get(baseUrl + "/servlets/com.mercurytours.servlet.WelcomeServlet");
+		screenshotUtil.embedScreenshot(scenario, driver);
 	}
 
 	@When("^User enter valid user name$")
@@ -47,6 +58,7 @@ public class Login_TestSteps {
 	public void user_enter_valid_password() throws Throwable {
 		driver.findElement(By.name("password")).clear();
 	    driver.findElement(By.name("password")).sendKeys("acpqualife");
+	    screenshotUtil.embedScreenshot(scenario, driver);
 	}
 
 	@When("^User cliks Sign-In button$")
@@ -57,6 +69,7 @@ public class Login_TestSteps {
 	@When("^Flight Finder page is displayed$")
 	public void flight_Finder_page_is_displayed() throws Throwable {
 		assertEquals("Flight Details", driver.findElement(By.cssSelector("b > font > font")).getText());
+		screenshotUtil.embedScreenshot(scenario, driver);
 	}
 
 	@After

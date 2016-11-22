@@ -2,22 +2,15 @@ package com.MercuryTours.cucumber.steps;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
-
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import com.utils.screenshotUtil;
 
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -29,7 +22,6 @@ public class FindFlight_TestSteps {
 
 	private WebDriver driver;
 	private String baseUrl;
-	private boolean acceptNextAlert = true;
 	private StringBuffer verificationErrors = new StringBuffer();
 	private Scenario scenario;
 	  
@@ -49,11 +41,14 @@ public class FindFlight_TestSteps {
 	@Given("^User is on Flight Finder Page$")
 	public void user_is_on_Flight_Finder_Page() throws Throwable {
 		driver.get(baseUrl + "/servlets/com.mercurytours.servlet.WelcomeServlet");
+		screenshotUtil.embedScreenshot(scenario, driver);
 	    driver.findElement(By.name("userName")).clear();
 	    driver.findElement(By.name("userName")).sendKeys("o.digiorgio");
 	    driver.findElement(By.name("password")).clear();
 	    driver.findElement(By.name("password")).sendKeys("acpqualife");
+	    screenshotUtil.embedScreenshot(scenario, driver);
 	    driver.findElement(By.name("login")).click();
+	    screenshotUtil.embedScreenshot(scenario, driver);
 	}
 
 	@When("^User select departure from New York$")
@@ -65,7 +60,7 @@ public class FindFlight_TestSteps {
 	@When("^User select arrival to Paris$")
 	public void user_select_arrival_to_Paris() throws Throwable {
 		new Select(driver.findElement(By.name("toPort"))).selectByVisibleText("Paris");
-		embedScreenshot(scenario);
+		screenshotUtil.embedScreenshot(scenario, driver);
 	}
 
 	@When("^User clicks Continue button$")
@@ -86,13 +81,14 @@ public class FindFlight_TestSteps {
 	@Then("^Paris is selected as arrival city$")
 	public void paris_is_selected_as_arrival_city() throws Throwable {
 		assertEquals("Paris to New York", driver.findElement(By.xpath("//table[2]/tbody/tr/td/table/tbody/tr[2]/td/b/font")).getText());
-		embedScreenshot(scenario);
+		screenshotUtil.embedScreenshot(scenario, driver);
 	}    
 	
 	@After
 	// Close Browser
 	public void tearDown() throws Exception {
-	  screenshotUtil.getscreenshot(driver, "MyName");
+	  //screenshotUtil.getscreenshot(driver, "MyName");
+	  //screenshotUtil.embedScreenshot(scenario, driver);
 	  driver.quit();
 	  String verificationErrorString = verificationErrors.toString();
 	  if (!"".equals(verificationErrorString)) {
@@ -100,15 +96,15 @@ public class FindFlight_TestSteps {
 	  }
 	}
 	
-	public void embedScreenshot(Scenario scenario){
-		try {
-			byte[] screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
-			scenario.embed(screenshot,  "image/png");
-			
-		} catch (WebDriverException somePlatformDontSuportScreenshots) {
-			System.err.println("Screenshot Error");
-		}
-	}
+//	public void embedScreenshot(Scenario scenario){
+//		try {
+//			byte[] screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+//			scenario.embed(screenshot,  "image/png");
+//			
+//		} catch (WebDriverException somePlatformDontSuportScreenshots) {
+//			System.err.println("Screenshot Error");
+//		}
+//	}
 	
 //	public void getscreenshot() throws Exception 
 //    {
