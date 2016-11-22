@@ -11,7 +11,8 @@ import cucumber.api.junit.Cucumber;
 		,glue={"com.MercuryTours.cucumber.steps"}
 		,monochrome = true
 		,tags={"@LoginOK"}
-		,plugin={"pretty","json:target/cucumber.json"}
+		//,plugin={"pretty","json:target/cucumber.json"}
+		,plugin={"pretty","html:target/Destination"}
 		)
 
 public class LoginOK {
