@@ -28,7 +28,7 @@ public class Login_TestSteps {
 	// Open browser
 	public void setUp() throws Exception {
 	    driver = new FirefoxDriver();
-	    baseUrl = "http://http://stx08-asusn751j:81";
+	    baseUrl = "http://stx08-asusn751j:81";
 	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	  }
 	
