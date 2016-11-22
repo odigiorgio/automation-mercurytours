@@ -4,14 +4,21 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import com.utils.screenshotUtil;
+
 import cucumber.api.PendingException;
+import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -24,7 +31,13 @@ public class FindFlight_TestSteps {
 	private String baseUrl;
 	private boolean acceptNextAlert = true;
 	private StringBuffer verificationErrors = new StringBuffer();
+	private Scenario scenario;
 	  
+	@Before
+	public void keepScenario(Scenario scenario) {
+		this.scenario = scenario;
+	}
+	
 	@Before
 	// Open browser
 	public void setUp() throws Exception {
@@ -46,11 +59,13 @@ public class FindFlight_TestSteps {
 	@When("^User select departure from New York$")
 	public void user_select_departure_from_New_York() throws Throwable {
 		new Select(driver.findElement(By.name("fromPort"))).selectByVisibleText("New York");
+		
 	}
 
 	@When("^User select arrival to Paris$")
 	public void user_select_arrival_to_Paris() throws Throwable {
 		new Select(driver.findElement(By.name("toPort"))).selectByVisibleText("Paris");
+		embedScreenshot(scenario);
 	}
 
 	@When("^User clicks Continue button$")
@@ -71,15 +86,34 @@ public class FindFlight_TestSteps {
 	@Then("^Paris is selected as arrival city$")
 	public void paris_is_selected_as_arrival_city() throws Throwable {
 		assertEquals("Paris to New York", driver.findElement(By.xpath("//table[2]/tbody/tr/td/table/tbody/tr[2]/td/b/font")).getText());
+		embedScreenshot(scenario);
 	}    
 	
 	@After
 	// Close Browser
 	public void tearDown() throws Exception {
+	  screenshotUtil.getscreenshot(driver, "MyName");
 	  driver.quit();
 	  String verificationErrorString = verificationErrors.toString();
 	  if (!"".equals(verificationErrorString)) {
 	    fail(verificationErrorString);
 	  }
 	}
+	
+	public void embedScreenshot(Scenario scenario){
+		try {
+			byte[] screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+			scenario.embed(screenshot,  "image/png");
+			
+		} catch (WebDriverException somePlatformDontSuportScreenshots) {
+			System.err.println("Screenshot Error");
+		}
+	}
+	
+//	public void getscreenshot() throws Exception 
+//    {
+//         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+//         //The below method will save the screen shot in d drive with name "screenshot.png"
+//         FileUtils.copyFile(scrFile, new File("D:\\screenshot.png"));
+//    }
 }

@@ -11,3 +11,4 @@ Then Select Flight page is displayed
 And New York is selected as departure city
 And Paris is selected as arrival city
 
+
