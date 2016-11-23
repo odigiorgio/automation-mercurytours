@@ -61,7 +61,9 @@ public class CheckPrice_TestSteps {
 
 	@When("^User select Pangea Airlines (\\d+) return flight$")
 	public void user_select_Pangea_Airlines_return_flight(int arg1) throws Throwable {
-	    
+		// Sélection vol Retour 
+		// Dans Selenium IDE : document.results.outFlight[1]
+		// ERROR: Caught exception [Error: Dom locators are not implemented yet!]
 		screenshotUtil.embedScreenshot(scenario, driver);
 	}
 
@@ -73,20 +75,13 @@ public class CheckPrice_TestSteps {
 	
 	@Then("^Book a Flight page is displayed$")
 	public void book_a_Flight_page_is_displayed() throws Throwable {
-		try {
-		      assertTrue(driver.getTitle().matches("^Book[\\s\\S]*$"));
-		    } catch (Error e) {
-		      verificationErrors.append(e.toString());
-		    }
+      assertTrue(driver.getTitle().matches("^Book[\\s\\S]*$"));
+
 	}
 
 	@Then("^Total Price \\(including taxes\\) is \\$(\\d+)$")
 	public void total_Price_including_taxes_is_$(int arg1) throws Throwable {
-		try {
-		      assertEquals("$942", driver.findElement(By.xpath("//td[2]/font/b")).getText());
-		    } catch (Error e) {
-		      verificationErrors.append(e.toString());
-		    }
+		assertEquals("$883", driver.findElement(By.xpath("//td[2]/font/b")).getText());
 	}
 	
 	@After
