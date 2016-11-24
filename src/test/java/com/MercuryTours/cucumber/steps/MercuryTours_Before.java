@@ -21,8 +21,8 @@ public class MercuryTours_Before {
 	private StringBuffer verificationErrors = new StringBuffer();
 	private Scenario scenario;
 
-	private String browserName = System.getProperty("browser");
-	// clean install -Dtest=$TEST_NAME test -Denv.browser=firefox
+	private Integer browserNameNumber; 
+	// clean install -Dtest=$TEST_NAME test -Denv.browser=2
 	
 	@Before
 	public void keepScenario(Scenario scenario) {
@@ -34,20 +34,33 @@ public class MercuryTours_Before {
 	// Open browser
 	public void setUp() throws Exception {
 		
-		browserName = "Essai";
+		String strBrowserNameNumber = System.getProperty("browser");
+		if (strBrowserNameNumber == null){
+			browserNameNumber = 3; // Chrome
+		}
+		else
+		{
+			browserNameNumber = Integer.parseInt(strBrowserNameNumber);
+			System.out.println("Browser from Maven");
+		}
 		
-		System.out.println("Browser : " + browserName);
+		System.out.println("Browser : " + browserNameNumber);
 		
-		switch(browserName.toLowerCase()) {
+		// Browser selection :
+		//   - 1 : IE
+		//   - 2 : Firefox
+		//   - 3 : Chrome
+		switch(browserNameNumber) {
 		
-			case "firefox" :
+			case 2 :
 				
 				// Firefox
 			    //driver = new FirefoxDriver();
 				VariablesGlobales.get().setdriver(new FirefoxDriver());
 			    //driver = VariablesGlobales.get().getdriver();
+				break;
 				
-			case "chrome" :
+			case 3 :
 				
 				// Chrome
 			    File fileChrome = new File("C:\\chromedriver_win32\\chromedriver.exe");
@@ -55,8 +68,9 @@ public class MercuryTours_Before {
 			    //driver = new ChromeDriver();
 			    VariablesGlobales.get().setdriver(new ChromeDriver());
 			    //driver = VariablesGlobales.get().getdriver();
+			    break;
 				
-			case "ie" :
+			case 1 :
 				
 				// Internet Explorer
 				File fileIE = new File("C:\\IEDriverServer_x64_2.53.1\\IEDriverServer.exe");
@@ -64,13 +78,7 @@ public class MercuryTours_Before {
 			    //driver = new InternetExplorerDriver();
 				VariablesGlobales.get().setdriver(new InternetExplorerDriver());
 			    //driver = VariablesGlobales.get().getdriver();
-			
-			 default : 
-			 
-				// Chrome	
-				 File fileChromeDefault = new File("C:\\chromedriver_win32\\chromedriver.exe");
-				 System.setProperty("webdriver.chrome.driver", fileChromeDefault.getAbsolutePath());
-				 VariablesGlobales.get().setdriver(new ChromeDriver());
+				break;
 		    
 		}
 		
