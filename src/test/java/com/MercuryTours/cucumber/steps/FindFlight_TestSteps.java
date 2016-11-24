@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import com.utils.VariablesGlobales;
 import com.utils.screenshotUtil;
 
 import cucumber.api.Scenario;
@@ -20,11 +21,12 @@ import cucumber.api.java.en.When;
 
 public class FindFlight_TestSteps {
 
-	private WebDriver driver;
-	private String baseUrl;
+	private WebDriver driver = VariablesGlobales.get().getdriver();
+	private String baseUrl = VariablesGlobales.get().getbaseUrl();
 	private StringBuffer verificationErrors = new StringBuffer();
-	private Scenario scenario;
-	  
+	private Scenario scenario = VariablesGlobales.get().getscenario();
+	
+	/*
 	@Before
 	public void keepScenario(Scenario scenario) {
 		this.scenario = scenario;
@@ -33,10 +35,11 @@ public class FindFlight_TestSteps {
 	@Before
 	// Open browser
 	public void setUp() throws Exception {
-	    driver = new FirefoxDriver();
-	    baseUrl = "http://stx08-asusn751j:81";
-	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	    //driver = new FirefoxDriver();
+	    //baseUrl = "http://stx08-asusn751j:81";
+	    //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	  }
+	*/
 
 	@Given("^User is on Flight Finder Page$")
 	public void user_is_on_Flight_Finder_Page() throws Throwable {

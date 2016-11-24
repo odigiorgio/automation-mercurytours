@@ -2,13 +2,17 @@ package com.MercuryTours.cucumber.steps;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import com.utils.VariablesGlobales;
 import com.utils.screenshotUtil;
 
 import cucumber.api.Scenario;
@@ -17,14 +21,16 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import junit.framework.Assert;
 
 public class CheckPrice_TestSteps {
 
-	private WebDriver driver;
-	private String baseUrl;
+	private WebDriver driver = VariablesGlobales.get().getdriver();
+	private String baseUrl = VariablesGlobales.get().getbaseUrl();
 	private StringBuffer verificationErrors = new StringBuffer();
-	private Scenario scenario;
-	  
+	private Scenario scenario = VariablesGlobales.get().getscenario();
+	
+	/*
 	@Before
 	public void keepScenario(Scenario scenario) {
 		this.scenario = scenario;
@@ -33,10 +39,35 @@ public class CheckPrice_TestSteps {
 	@Before
 	// Open browser
 	public void setUp() throws Exception {
-	    driver = new FirefoxDriver();
+		
+		// Lancement Firefox
+	    //driver = new FirefoxDriver();
+		
+		// Lancement Internet Explorer
+		//File file = new File("C:\\IEDriverServer_x64_2.53.1\\IEDriverServer.exe");
+	    //System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+	    //driver = new InternetExplorerDriver();
+	    
+	    // Lancement Chrome
+	    //File file = new File("C:\\chromedriver_win32\\chromedriver.exe");
+	    //System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+	    //driver = new ChromeDriver();
+	    
+	    File file = new File("C:\\chromedriver_win32\\chromedriver.exe");
+	    System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+	    //driver = new ChromeDriver();
+	    VariablesGlobales.get().setdriver(new ChromeDriver());
+	    driver = VariablesGlobales.get().getdriver();
+	    
+	    baseUrl = "http://stx08-asusn751j:81";
+	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	    
 	    baseUrl = "http://stx08-asusn751j:81";
 	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	  }
+	
+	*/
+	
 	
 	@Given("^User is on Select Flight Page$")
 	public void user_is_on_Select_Flight_Page() throws Throwable {
@@ -81,6 +112,9 @@ public class CheckPrice_TestSteps {
 
 	@Then("^Total Price \\(including taxes\\) is \\$(\\d+)$")
 	public void total_Price_including_taxes_is_$(int arg1) throws Throwable {
+		String expectedText = "$883";
+		String actualText = driver.findElement(By.xpath("//td[2]/font/b")).getText();
+		
 		assertEquals("$883", driver.findElement(By.xpath("//td[2]/font/b")).getText());
 	}
 	
