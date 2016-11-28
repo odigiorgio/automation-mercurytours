@@ -87,6 +87,7 @@ public class FindFlight_TestSteps {
 		screenshotUtil.embedScreenshot(scenario, driver);
 	}    
 	
+	/*
 	@After
 	// Close Browser
 	public void tearDown() throws Exception {
@@ -98,6 +99,7 @@ public class FindFlight_TestSteps {
 	    fail(verificationErrorString);
 	  }
 	}
+	*/
 	
 //	public void embedScreenshot(Scenario scenario){
 //		try {

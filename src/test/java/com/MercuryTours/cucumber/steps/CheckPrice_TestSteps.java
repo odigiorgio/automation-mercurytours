@@ -1,9 +1,29 @@
 package com.MercuryTours.cucumber.steps;
 
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import junit.framework.TestCase;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.equalTo;
+
+import org.hamcrest.core.IsEqual;
+
+//import org.hamcrest.core.IsEqual;
+//import org.hamcrest.core.IsNull;
+//import org.hamcrest.text.IsEmptyString;
+//import org.hamcrest.core.StringContains;
+//import org.hamcrest.core.SubstringMatcher;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +32,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import com.utils.RegexMatcher;
 import com.utils.VariablesGlobales;
 import com.utils.screenshotUtil;
 
@@ -29,6 +50,10 @@ public class CheckPrice_TestSteps {
 	private String baseUrl = VariablesGlobales.get().getbaseUrl();
 	private StringBuffer verificationErrors = new StringBuffer();
 	private Scenario scenario = VariablesGlobales.get().getscenario();
+	private Integer errorNumber;
+	
+	@Rule
+    public ErrorCollector collector = new ErrorCollector();
 	
 	/*
 	@Before
@@ -106,19 +131,41 @@ public class CheckPrice_TestSteps {
 	
 	@Then("^Book a Flight page is displayed$")
 	public void book_a_Flight_page_is_displayed() throws Throwable {
-      assertTrue(driver.getTitle().matches("^Book[\\s\\S]*$"));
-
+		String expectedText = "^Book[\\s\\S]*$";
+		String actualText = driver.getTitle();
+        //assertTrue(driver.getTitle().matches("^Book[\\s\\S]*$"));
+        //collector.checkThat(driver.getTitle(), IsEqual.equalTo("^Book[\\s\\S]*$"));
+		assertThat(actualText, RegexMatcher.matchesRegex(expectedText));
+		//collector.checkThat(actualText,containsString(actualText));	
 	}
 
 	@Then("^Total Price \\(including taxes\\) is \\$(\\d+)$")
 	public void total_Price_including_taxes_is_$(int arg1) throws Throwable {
-		String expectedText = "$883";
+		String expectedText = "$881";
 		String actualText = driver.findElement(By.xpath("//td[2]/font/b")).getText();
-		
-		assertEquals("$883", driver.findElement(By.xpath("//td[2]/font/b")).getText());
+		String checkpointDescription = "Total price should be $881";
+		//assertEquals("$883", driver.findElement(By.xpath("//td[2]/font/b")).getText());
+		// assertThat(actual, is(equalTo(expected)));
+		assertThat(checkpointDescription, actualText, is(equalTo(expectedText)));
+		//collector.checkThat(expectedText, IsEqual.equalTo(actualText));
 	}
 	
-	@After
+	@Then("^Taxes is \\$(\\d+)$")
+	public void taxes_is_$(int arg1) throws Throwable {
+		String expectedText = "$67";
+		String actualText = driver.findElement(By.xpath("//tr[8]/td[2]/font")).getText();
+		//assertEquals("$67", driver.findElement(By.xpath("//tr[8]/td[2]/font")).getText());
+		//collector.checkThat("$67", IsEqual.equalTo(driver.findElement(By.xpath("//tr[8]/td[2]/font")).getText()));
+		assertThat(actualText, is(equalTo(expectedText)));
+		//collector.checkThat(expectedText, IsEqual.equalTo(actualText));
+	}
+	
+	@Given("^User is on Book a Flight Page$")
+	public void user_is_on_Book_a_Flight_Page() throws Throwable {
+	    
+	}
+	
+	/*@After
 	// Close Browser
 	public void tearDown() throws Exception {
 	  //screenshotUtil.getscreenshot(driver, "MyName");
@@ -129,5 +176,6 @@ public class CheckPrice_TestSteps {
 	    fail(verificationErrorString);
 	  }
 	}
+	*/
 
 }

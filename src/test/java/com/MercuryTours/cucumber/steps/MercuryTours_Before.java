@@ -22,7 +22,9 @@ public class MercuryTours_Before {
 	private Scenario scenario;
 
 	private Integer browserNameNumber; 
-	// clean install -Dtest=$TEST_NAME test -Denv.browser=2
+	// Browser number used in Maven command line from Jenkins Job
+	// clean install -Dtest=$TEST_NAME test -Denv.browser=2 -fn
+	
 	
 	@Before
 	public void keepScenario(Scenario scenario) {
@@ -34,9 +36,24 @@ public class MercuryTours_Before {
 	// Open browser
 	public void setUp() throws Exception {
 		
+		// Browser parameter passed in pom.xml file
+		/*<build>
+        <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.12.4</version>
+            <configuration>
+                <systemPropertyVariables>
+                    <browser>${env.browser}</browser> <------ Browser parameter
+                </systemPropertyVariables>
+            </configuration>
+        </plugin>
+    	</plugins>
+		</build>*/
 		String strBrowserNameNumber = System.getProperty("browser");
 		if (strBrowserNameNumber == null){
-			browserNameNumber = 3; // Chrome
+			browserNameNumber = 3; // Chrome by default
 		}
 		else
 		{

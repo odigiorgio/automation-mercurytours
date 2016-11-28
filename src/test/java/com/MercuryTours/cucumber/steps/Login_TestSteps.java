@@ -74,6 +74,7 @@ public class Login_TestSteps {
 		screenshotUtil.embedScreenshot(scenario, driver);
 	}
 
+	/*
 	@After
 	// Close Browser
 	public void tearDown() throws Exception {
@@ -83,6 +84,7 @@ public class Login_TestSteps {
 	    fail(verificationErrorString);
 	  }
 	}
+	*/
 }
 
 
