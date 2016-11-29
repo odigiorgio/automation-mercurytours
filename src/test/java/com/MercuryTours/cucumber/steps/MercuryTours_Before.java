@@ -18,7 +18,6 @@ public class MercuryTours_Before {
 
 	private WebDriver driver;
 	private String baseUrl;
-	private StringBuffer verificationErrors = new StringBuffer();
 	private Scenario scenario;
 
 	private Integer browserNameNumber; 
@@ -72,9 +71,7 @@ public class MercuryTours_Before {
 			case 2 :
 				
 				// Firefox
-			    //driver = new FirefoxDriver();
 				VariablesGlobales.get().setdriver(new FirefoxDriver());
-			    //driver = VariablesGlobales.get().getdriver();
 				break;
 				
 			case 3 :
@@ -82,9 +79,7 @@ public class MercuryTours_Before {
 				// Chrome
 			    File fileChrome = new File("C:\\chromedriver_win32\\chromedriver.exe");
 			    System.setProperty("webdriver.chrome.driver", fileChrome.getAbsolutePath());
-			    //driver = new ChromeDriver();
 			    VariablesGlobales.get().setdriver(new ChromeDriver());
-			    //driver = VariablesGlobales.get().getdriver();
 			    break;
 				
 			case 1 :
@@ -92,9 +87,7 @@ public class MercuryTours_Before {
 				// Internet Explorer
 				File fileIE = new File("C:\\IEDriverServer_x64_2.53.1\\IEDriverServer.exe");
 			    System.setProperty("webdriver.ie.driver", fileIE.getAbsolutePath());
-			    //driver = new InternetExplorerDriver();
 				VariablesGlobales.get().setdriver(new InternetExplorerDriver());
-			    //driver = VariablesGlobales.get().getdriver();
 				break;
 		    
 		}

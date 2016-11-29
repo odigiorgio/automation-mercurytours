@@ -1,22 +1,17 @@
 package com.MercuryTours.cucumber.steps;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
-import java.util.concurrent.TimeUnit;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
 
+import com.utils.RegexMatcher;
 import com.utils.VariablesGlobales;
 import com.utils.screenshotUtil;
 
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -25,24 +20,7 @@ public class Login_TestSteps {
 	
 	private WebDriver driver = VariablesGlobales.get().getdriver();
 	private String baseUrl = VariablesGlobales.get().getbaseUrl();
-	private boolean acceptNextAlert = true;
-	private StringBuffer verificationErrors = new StringBuffer();
 	private Scenario scenario = VariablesGlobales.get().getscenario();
-	
-	/*
-	@Before
-	public void keepScenario(Scenario scenario) {
-		this.scenario = scenario;
-	}
-	
-	@Before
-	// Open browser
-	public void setUp() throws Exception {
-	    //driver = new FirefoxDriver();
-	    //baseUrl = "http://stx08-asusn751j:81";
-	    //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	  }
-	*/
 	
 	@Given("^User navigates to MercuryTours Home Page$")
 	public void user_navigates_to_MercuryTours_Home_Page() throws Throwable {
@@ -70,21 +48,12 @@ public class Login_TestSteps {
 
 	@When("^Flight Finder page is displayed$")
 	public void flight_Finder_page_is_displayed() throws Throwable {
-		assertEquals("Flight Details", driver.findElement(By.cssSelector("b > font > font")).getText());
+		String expectedText = "^Find a Flight[\\s\\S]*$";
+		String actualText = driver.getTitle();
+		assertThat(actualText, RegexMatcher.matchesRegex(expectedText));
 		screenshotUtil.embedScreenshot(scenario, driver);
 	}
 
-	/*
-	@After
-	// Close Browser
-	public void tearDown() throws Exception {
-	  driver.quit();
-	  String verificationErrorString = verificationErrors.toString();
-	  if (!"".equals(verificationErrorString)) {
-	    fail(verificationErrorString);
-	  }
-	}
-	*/
 }
 
 

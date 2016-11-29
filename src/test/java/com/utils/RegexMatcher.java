@@ -3,10 +3,6 @@ package com.utils;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 public class RegexMatcher extends TypeSafeMatcher<String> {
 
 	private final String regex;
@@ -29,6 +25,6 @@ public class RegexMatcher extends TypeSafeMatcher<String> {
      // matcher method you can call on this matcher class
     public static RegexMatcher matchesRegex(final String regex) {
     	return new RegexMatcher(regex);
-}
+    }
 
 }

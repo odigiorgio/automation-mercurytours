@@ -2,7 +2,6 @@ package com.MercuryTours.cucumber.steps;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
 import com.utils.VariablesGlobales;

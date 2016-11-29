@@ -1,11 +1,8 @@
 package com.utils;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Test;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
