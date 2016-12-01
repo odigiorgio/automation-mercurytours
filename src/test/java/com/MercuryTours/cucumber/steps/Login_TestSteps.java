@@ -53,6 +53,20 @@ public class Login_TestSteps {
 		assertThat(actualText, RegexMatcher.matchesRegex(expectedText));
 		screenshotUtil.embedScreenshot(scenario, driver);
 	}
+	
+	@When("^User enter wrong user name$")
+	public void user_enter_wrong_user_name() throws Throwable {
+		driver.findElement(By.name("userName")).clear();
+	    driver.findElement(By.name("userName")).sendKeys("towcruise");
+	}
+
+	@Then("^Sign-on page is displayed$")
+	public void sign_on_page_is_displayed() throws Throwable {
+		String expectedText = "^Sign-on[\\s\\S]*$";
+		String actualText = driver.getTitle();
+		assertThat(actualText, RegexMatcher.matchesRegex(expectedText));
+		screenshotUtil.embedScreenshot(scenario, driver);
+	}
 
 }
 
